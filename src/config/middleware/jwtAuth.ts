@@ -17,17 +17,17 @@ interface RequestWithUser extends Request {
  * @swagger
  *  components:
  *   securitySchemes:
- *     ApiKeyAuth:
- *       type: apiKey
- *       in: header
- *       name: x-access-token
+ *     bearerAuth:
+ *       type: http
+ *       scheme: bearer
+ *       bearerFormat: JWT
  */
 export function isAuthenticated(req: RequestWithUser, res: Response, next: NextFunction): void {
-    const token: any = req.headers['x-access-token'];
+    const token: any = req.headers.authorization;
 
-    if (token) {
+    if (token && token.indexOf('Bearer ') !== -1) {
         try {
-            const user: object | string = jwt.verify(token, app.get('secret'));
+            const user: object | string = jwt.verify(token.split('Bearer ')[1], app.get('secret'));
 
             req.user = user;
 

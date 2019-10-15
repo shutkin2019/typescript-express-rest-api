@@ -7,10 +7,6 @@ import * as helmet from 'helmet';
 import { HttpError } from '@/config/error/index';
 import { sendHttpErrorModule } from '@/config/error/sendHttpError';
 
-type NextFunction = express.NextFunction;
-type Request = express.Request;
-type Response = express.Response;
-
 /**
  * @export
  * @param {express.Application} app
@@ -30,21 +26,13 @@ export function configure(app: express.Application): void {
     // helps you secure your Express apps by setting various HTTP headers
     app.use(helmet());
     // providing a Connect/Express middleware that can be used to enable CORS with various options
-    app.use(cors());
+    app.use(cors({
+        exposedHeaders: ['Authorization'],
+        optionsSuccessStatus: 200,
+    }));
 
     // custom errors
     app.use(sendHttpErrorModule);
-
-    // cors
-    app.use((req: Request, res: Response, next: NextFunction) => {
-        res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS ');
-        res.header(
-            'Access-Control-Allow-Headers',
-            'Origin, X-Requested-With, Content-Type, Accept, Authorization, Access-Control-Allow-Credentials'
-        );
-        res.header('Access-Control-Allow-Credentials', 'true');
-        next();
-    });
 }
 
 interface CustomResponse extends express.Response {

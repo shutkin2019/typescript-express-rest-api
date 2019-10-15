@@ -6,6 +6,15 @@ import { NextFunction } from 'express';
 
 /**
  * @export
+ * @interface IUserRequest
+ */
+export interface IUserRequest {
+    id: string;
+    email: string;
+}
+
+/**
+ * @export
  * @interface IUserModel
  * @extends {Document}
  */

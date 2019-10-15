@@ -1,3 +1,4 @@
+import * as jwtConfig from '@/config/middleware/jwtAuth';
 import { AuthComponent } from '@/components';
 import { Router } from 'express';
 
@@ -12,7 +13,7 @@ const router: Router = Router();
  * @swagger
  * /auth/signup/:
  *  post:
- *    description: sign up user to application
+ *    description: Register user to application
  *    tags: ["auth"]
  *    requestBody:
  *      description: sign up body
@@ -26,20 +27,16 @@ const router: Router = Router();
  *            password: test_test
  *    responses:
  *      200:
- *        description: user successfuly signed in
+ *        description: user successfuly signed up
  *        content:
  *          appication/json:
  *            example:
- *              status: 200
- *              logged: true
- *              message: Sign in successfull!!
+ *              message: You have signed up successfully
  *      400:
- *        description: sign in failed
+ *        description: sign up failed
  *        content:
  *          application/json:
  *            example:
- *              status: 400
- *              logged: false
  *              message: Email already exists
  */
 router.post('/signup', AuthComponent.signup);
@@ -65,23 +62,52 @@ router.post('/signup', AuthComponent.signup);
  *            password: test_test
  *    responses:
  *      200:
- *        description: user successfuly logged
+ *        description: user successfuly logged in
+ *        headers:
+ *          Authorization:
+ *            schema:
+ *              type: string
+ *            description: JWT token
  *        content:
  *          appication/json:
  *            example:
- *              status: 200
- *              logged: true
- *              message: Successfully logged!
+ *              message: Login Success!
  *      401:
- *        description: Not logged, invalid credentials
+ *        description: Not logged in, invalid credentials
  *        content:
  *          application/json:
  *            example:
- *              status: 401
- *              logged: false
  *              message: Invalid credentials
  */
 router.post('/login', AuthComponent.login);
+
+/**
+ * GET method route
+ * @example http://localhost:PORT/user
+ *
+ * @swagger
+ * /auth/user/:
+ *  get:
+ *    description: Get authenticated user
+ *    tags: ["auth"]
+ *    security:
+ *      - bearerAuth: []
+ *    responses:
+ *      200:
+ *        description: return authenticated user
+ *        content:
+ *          application/json:
+ *            schema:
+ *              oneOf:
+ *                - $ref: '#/components/schemas/UserSchema'
+ *      default:
+ *        description: unexpected error
+ *        content:
+ *          application/json:
+ *            schema:
+ *              $ref: '#/components/schemas/Error'
+ */
+router.get('/user', jwtConfig.isAuthenticated, AuthComponent.user);
 
 /**
  * @export {express.Router}

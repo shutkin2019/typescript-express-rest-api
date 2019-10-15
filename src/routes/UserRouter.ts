@@ -16,7 +16,7 @@ const router: Router = Router();
  *     description: Get all stored users in Database
  *     tags: ["users"]
  *     security:
- *      - ApiKeyAuth: []
+ *      - bearerAuth: []
  *     responses:
  *       200:
  *         description: An array of users
@@ -44,7 +44,7 @@ router.get('/', UserComponent.findAll);
  *      description: Create new User
  *      tags: ["users"]
  *      security:
- *       - ApiKeyAuth: []
+ *       - bearerAuth: []
  *      requestBody:
  *        description: user creation request body
  *        required: true
@@ -82,7 +82,7 @@ router.post('/', UserComponent.create);
  *    description: Get user by userId
  *    tags: ["users"]
  *    security:
- *      - ApiKeyAuth: []
+ *      - bearerAuth: []
  *    parameters:
  *      - in: path
  *        name: id
@@ -111,7 +111,7 @@ router.get('/:id', UserComponent.findOne);
  *    description: Delete user by userId
  *    tags: ["users"]
  *    security:
- *      - ApiKeyAuth: []
+ *      - bearerAuth: []
  *    parameters:
  *      - in: path
  *        name: id
