@@ -45,7 +45,7 @@ class UserValidation extends Validation {
         id: string;
     }> {
         const schema: Joi.ObjectSchema = Joi.object().keys({
-            id: this.customJoi.objectId().required()
+            id: this.customJoi.objectId().required(),
         });
 
         return schema.validate(body);
@@ -62,7 +62,7 @@ class UserValidation extends Validation {
         id: string;
     }> {
         const schema: Joi.ObjectSchema = Joi.object().keys({
-            id: this.customJoi.objectId().required()
+            id: this.customJoi.objectId().required(),
         });
 
         return schema.validate(body);

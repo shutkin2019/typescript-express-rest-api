@@ -11,7 +11,7 @@ describe('API', () => {
     it('get all users', (done) => {
         request(app)
             .get('/v1/users')
-            .set('x-access-token', global.token)
+            .set('Authorization', global.bearerToken)
             .expect((res) => {
                 res.status.should.equal(200);
                 res.body.should.be.an('array');
@@ -28,7 +28,7 @@ describe('API', () => {
         request(app)
             .post('/v1/users')
             .send(newUser)
-            .set('x-access-token', global.token)
+            .set('Authorization', global.bearerToken)
             .expect((res) => {
                 res.status.should.equal(201);
                 res.body.should.have.property('email');

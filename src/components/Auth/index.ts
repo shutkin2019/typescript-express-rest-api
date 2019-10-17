@@ -54,7 +54,7 @@ export async function login(req: Request, res: Response, next: NextFunction): Pr
 
         res.status(HttpStatus.OK)
             .header({
-                Authorization: token
+                Authorization: token,
             })
             .send({
                 message: 'Login Success!',

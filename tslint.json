@@ -21,7 +21,16 @@
         ],
         "no-this-assignment": false,
         "trailing-comma": [
-            false
+            true,
+            {
+                "multiline": {
+                    "objects": "always",
+                    "arrays": "always",
+                    "functions": "never",
+                    "typeLiterals": "ignore"
+                },
+                "esSpecCompliant": true
+            }
         ],
         "ter-arrow-parens": [
             true,

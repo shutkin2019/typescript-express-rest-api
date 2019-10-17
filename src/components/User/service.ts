@@ -38,9 +38,14 @@ const UserService: IUserService = {
                 throw new Error(validate.error.message);
             }
 
-            return await UserModel.findOne({
-                _id: Types.ObjectId(id),
-            });
+            return await UserModel.findOne(
+                {
+                    _id: Types.ObjectId(id),
+                },
+                {
+                    password: 0,
+                }
+            );
         } catch (error) {
             throw new Error(error.message);
         }

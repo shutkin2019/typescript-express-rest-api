@@ -25,7 +25,7 @@ abstract class Validation {
             type: 'objectId',
             base: joi.string(),
             messages: {
-                objectId: this.messageObjectId
+                objectId: this.messageObjectId,
             },
             validate(value: any, helpers: any): any {
                 if (!Types.ObjectId.isValid(value)) {

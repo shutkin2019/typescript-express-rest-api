@@ -12,39 +12,52 @@ global.token = '';
  * Authentication tests
  */
 describe('Authentication', () => {
-    it('sign up', (done) => {
+    it('register to app', (done) => {
         request(app)
             .post('/auth/signup')
             .send(user)
             .expect('Content-type', /json/)
             .expect((res) => {
-                res.body.status.should.equal(200);
-                res.body.logged.should.equal(true);
+                res.status.should.equal(200);
                 res.body.message.should.be.a('string');
-                global.token = res.body.token;
             })
             .end(done)
     });
-    it('sign up user with existing email', (done) => {
+
+    it('register user with existing email', (done) => {
         request(app)
             .post('/auth/signup')
             .send(user)
             .expect('Content-type', /json/)
             .expect((res) => {
-                res.body.status.should.equal(400);
+                res.status.should.equal(400);
             })
             .end(done);
     });
+
     it('login to app', (done) => {
         request(app)
             .post('/auth/login')
             .send(user)
             .expect('Content-type', /json/)
             .expect((res) => {
-                res.body.status.should.equal(200);
-                res.body.logged.should.equal(true);
+                res.status.should.equal(200);
                 res.body.message.should.be.a('string');
-                global.token = res.body.token;
+                res.header.authorization.should.not.null;
+                global.token = res.header.authorization;
+                global.bearerToken = `Bearer ${res.header.authorization}`;
+            })
+            .end(done);
+    });
+
+    it('get authenticated user', (done) => {
+        request(app)
+            .get('/auth/user')
+            .set('Authorization', global.bearerToken)
+            .expect((res) => {
+                res.status.should.equal(200);
+                res.body.user.should.not.null;
+                res.body.user.email.should.equal(user.email);
             })
             .end(done);
     });
