@@ -8,11 +8,9 @@
     "nodejs",
     "rest",
     "restfull",
-    "api",
-    "builder",
-    "generator"
+    "api"
   ],
-  "description": "This generator will help you to build your own Node.js Express Mongodb API using TypeScript.",
+  "description": "This template will help you to build your own Node.js Express Mongodb API using TypeScript.",
   "license": "MIT",
   "scripts": {
     "build": "tsc --skipLibCheck",
@@ -38,7 +36,8 @@
     "jsonwebtoken": "^8.5.1",
     "module-alias": "^2.2.2",
     "mongoose": "^5.7.3",
-    "util": "^0.11.1"
+    "util": "^0.11.1",
+    "winston": "^3.2.1"
   },
   "devDependencies": {
     "@types/bcrypt": "^3.0.0",
@@ -47,7 +46,6 @@
     "@types/compression": "^0.0.36",
     "@types/cookie-parser": "^1.4.2",
     "@types/cors": "^2.8.6",
-    "@types/debug": "^0.0.31",
     "@types/dotenv": "^6.1.1",
     "@types/ejs": "^2.6.3",
     "@types/express": "^4.17.1",
@@ -60,7 +58,6 @@
     "@types/supertest": "^2.0.8",
     "@types/swagger-jsdoc": "^0.0.2",
     "@types/swagger-ui-express": "^3.0.1",
-    "@types/yeoman-generator": "^3.1.4",
     "chai": "^4.2.0",
     "jsdoc": "^3.6.3",
     "mocha": "^6.2.1",

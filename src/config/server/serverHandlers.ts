@@ -1,4 +1,4 @@
-import * as debug from 'debug';
+import Logger from '@/config/utils/Logger';
 import { Address } from 'cluster';
 
 /**
@@ -15,12 +15,12 @@ export function onError(error: NodeJS.ErrnoException, port: number | string | bo
 
     switch (error.code) {
         case 'EACCES':
-            console.error(`${bind} requires elevated privileges`);
+            Logger.error(`${bind} requires elevated privileges`);
             process.exit(1);
 
             break;
         case 'EADDRINUSE':
-            console.error(`${bind} is already in use`);
+            Logger.error(`${bind} is already in use`);
             process.exit(1);
 
             break;
@@ -36,5 +36,5 @@ export function onListening(): void {
     const addr: Address = this.address();
     const bind: string = typeof addr === 'string' ? `pipe ${addr}` : `port ${addr.port}`;
 
-    debug(`Listening on ${bind}`);
+    Logger.debug(`Listening on ${bind}`);
 }

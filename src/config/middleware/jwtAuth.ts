@@ -1,3 +1,4 @@
+import * as HttpStatus from 'http-status-codes';
 import * as jwt from 'jsonwebtoken';
 import { NextFunction, Request, Response } from 'express';
 import app from '@/config/server/server';
@@ -33,9 +34,9 @@ export function isAuthenticated(req: RequestWithUser, res: Response, next: NextF
 
             return next();
         } catch (error) {
-            return next(new HttpError(401, http.STATUS_CODES[401]));
+            return next(new HttpError(HttpStatus.UNAUTHORIZED, http.STATUS_CODES[HttpStatus.UNAUTHORIZED]));
         }
     }
 
-    return next(new HttpError(400, 'No token provided'));
+    return next(new HttpError(HttpStatus.BAD_REQUEST, 'No token provided'));
 }

@@ -44,6 +44,6 @@ after(async () => {
     try {
         await UserModel.collection.drop();
     } catch (error) {
-        console.log('Something went wrong after tests, seems your database doesnt cleaned');
+        console.error('Something went wrong after tests, seems your database doesnt cleaned');
     }
 });

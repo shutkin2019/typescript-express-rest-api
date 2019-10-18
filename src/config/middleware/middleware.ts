@@ -1,11 +1,13 @@
+import * as HttpStatus from 'http-status-codes';
 import * as bodyParser from 'body-parser';
 import * as compression from 'compression';
 import * as cookieParser from 'cookie-parser';
 import * as cors from 'cors';
 import * as express from 'express';
 import * as helmet from 'helmet';
-import { HttpError } from '@/config/error/index';
+import { HttpError } from '@/config/error';
 import { sendHttpErrorModule } from '@/config/error/sendHttpError';
+import Logger from '@/config/utils/Logger';
 
 /**
  * @export
@@ -28,7 +30,7 @@ export function configure(app: express.Application): void {
     // providing a Connect/Express middleware that can be used to enable CORS with various options
     app.use(cors({
         exposedHeaders: ['Authorization'],
-        optionsSuccessStatus: 200,
+        optionsSuccessStatus: HttpStatus.OK,
     }));
 
     // custom errors
@@ -53,14 +55,14 @@ export function initErrorHandler(app: express.Application): void {
             res.sendHttpError(error);
         } else {
             if (app.get('env') === 'development') {
-                error = new HttpError(500, error.message);
+                error = new HttpError(HttpStatus.INTERNAL_SERVER_ERROR, error.message);
                 res.sendHttpError(error);
             } else {
-                error = new HttpError(500);
+                error = new HttpError(HttpStatus.INTERNAL_SERVER_ERROR);
                 res.sendHttpError(error, error.message);
             }
         }
 
-        console.error(error);
+        Logger.error(error);
     });
 }
